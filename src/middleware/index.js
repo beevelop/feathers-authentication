@@ -196,7 +196,7 @@ export let setupSocketIOAuthentication = function(app, options = {}) {
           endPoint = options.googleEndpoint;
         }
 
-        app.service(options.localEndpoint).create(data, params).then(response => {
+        app.service(endPoint).create(data, params).then(response => {
           socket.feathers.token = response.token;
           socket.feathers.user = response.data;
           socket.emit('authenticated', response);
