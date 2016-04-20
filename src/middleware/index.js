@@ -188,12 +188,12 @@ export let setupSocketIOAuthentication = function(app, options = {}) {
         params.req.body = data;
 
         // localEndpoint is default
-        let endPoint = config.localEndpoint;
-        
+        let endPoint = options.localEndpoint;
+
         if (data.type === 'facebook') {
-          endPoint = config.facebookEndpoint;
+          endPoint = options.facebookEndpoint;
         } else if (options.type === 'google') {
-          endPoint = config.googleEndpoint;
+          endPoint = options.googleEndpoint;
         }
 
         app.service(options.localEndpoint).create(data, params).then(response => {
