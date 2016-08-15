@@ -34,7 +34,7 @@ const defaults = {
   cookie: {
     name: 'feathers-jwt',
     httpOnly: false,
-    secure: process.env.NODE_ENV === 'production' ? true : false
+    secure: process.env.NODE_ENV === 'production'
   }
 };
 
@@ -58,8 +58,12 @@ export default function auth(config = {}) {
       config.local = {};
     }
 
+    if (config.cookie ){
+      config.cookie = Object.assign({}, defaults.cookie, config.cookie);
+    }
+
     // Merge and flatten options
-    const authOptions = Object.assign({}, defaults, app.get('auth'), config);
+    const authOptions = Object.assign({}, defaults, app.get('auth'),config);
 
     // If a custom success redirect is passed in or it is disabled then we
     // won't setup the default route handler.

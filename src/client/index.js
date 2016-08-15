@@ -88,7 +88,7 @@ export default function(opts = {}) {
       clearCookie(config.cookie);
 
       // remove the token from localStorage
-      return Promise.resolve(app.get('storage').setItem(config.tokenKey, '')).then(() => {
+      return Promise.resolve(app.get('storage').removeItem(config.tokenKey)).then(() => {
         // If using sockets de-authenticate the socket
         if (app.io || app.primus) {
           const method = app.io ? 'emit' : 'send';
