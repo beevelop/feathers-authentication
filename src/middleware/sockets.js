@@ -29,9 +29,18 @@ function setupSocketHandler(feathersParams, provider, emit, app, options) {
 
         const params = Object.assign({ provider }, data);
 
+        // localEndpoint is default
+        let endPoint = options.localEndpoint;
+
+        if (data.type === 'facebook') {
+          endPoint = options.facebookEndpoint;
+        } else if (options.type === 'google') {
+          endPoint = options.googleEndpoint;
+        }
+
         // The token gets normalized in hook.params for REST so we'll stay with
         // convention and pass it as params using sockets.
-        app.service(options.tokenEndpoint).create({}, params).then(response => {
+        app.service(endPoint).create({}, params).then(response => {
           feathersParams(socket).token = response.token;
           feathersParams(socket).user = response.data;
           socket[emit]('authenticated', response);
